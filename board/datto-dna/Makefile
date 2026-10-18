@@ -4,6 +4,7 @@ PKG_NAME:=datto-dna
 PKG_VERSION:=0.1
 PKG_RELEASE:=1
 
+PKG_MAINTAINER:=James Buren <braewoods+ow@braewoods.net>
 PKG_LICENSE:=GPL-2.0
 
 include $(INCLUDE_DIR)/package.mk
