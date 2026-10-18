@@ -97,7 +97,7 @@ static const struct software_node *datto_dna_swnodes[] = {
 static struct platform_device *datto_dna_led_pdev;
 static struct platform_device *datto_dna_key_pdev;
 
-static int
+static int __init
 datto_dna_code_verify(void)
 {
 	if (datto_dna_code == KEY_RESERVED || datto_dna_code > KEY_MAX) {
