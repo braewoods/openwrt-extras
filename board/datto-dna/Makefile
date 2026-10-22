@@ -43,7 +43,7 @@ include $(INCLUDE_DIR)/kernel.mk
 define KernelPackage/datto-dna
   SUBMENU:=Other modules
   TITLE:=Datto DNA Platform Driver
-  DEPENDS:=+kmod-gpio-nct5104d +kmod-leds-gpio +kmod-input-gpio-keys-polled
+  DEPENDS:=+kmod-gpio-nuvoton +kmod-leds-gpio +kmod-input-gpio-keys-polled
   FILES:=$(PKG_BUILD_DIR)/datto-dna.ko
   AUTOLOAD:=$(call AutoLoad,60,datto-dna,1)
   KCONFIG:=

@@ -21,7 +21,7 @@
 static unsigned int datto_dna_code = KEY_RESTART;
 
 static const struct software_node datto_dna_led_gpio_node = {
-    .name = "gpio-nct5104d-1",
+    .name = "gpio-nuvoton-1",
 };
 
 static const struct software_node datto_dna_leds_node = {
