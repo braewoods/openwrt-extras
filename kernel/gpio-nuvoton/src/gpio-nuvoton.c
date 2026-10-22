@@ -11,6 +11,7 @@
 
 #include <linux/module.h>
 #include <linux/init.h>
+#include <linux/version.h>
 #include <linux/ioport.h>
 #include <linux/io.h>
 #include <linux/gpio/driver.h>
@@ -305,7 +306,11 @@ nuvoton_get(struct gpio_chip *gc, unsigned int off)
     return !!bits;
 }
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6,17,0)
+static int
+#else
 static void
+#endif
 nuvoton_set(struct gpio_chip *gc, unsigned int off, int on)
 {
     const struct nuvoton_bank *bank = gpiochip_get_data(gc);
@@ -313,12 +318,18 @@ nuvoton_set(struct gpio_chip *gc, unsigned int off, int on)
 
     ret = nuvoton_request(bank);
     if (ret)
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6,17,0)
+        return ret;
+#else
         return;
+#endif
 
     nuvoton_select(bank, NUVOTON_REG_DAT);
     nuvoton_set_bits(bank, NUVOTON_REG_DAT, off, on);
     nuvoton_release(bank);
-    return;
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6,17,0)
+    return 0;
+#endif
 }
 
 static int
