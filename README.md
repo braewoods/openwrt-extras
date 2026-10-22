@@ -26,7 +26,7 @@ In any case, the following chips are known to be supported:
 
 * NCT6102D / NCT6104D / NCT6106D
 
-## Datto DNA
+## datto-dna
 
 I have created a package for the Datto DNA routers that contains a
 platform driver that I wrote for the purposes of making the buttons
