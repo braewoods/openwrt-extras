@@ -1,3 +1,10 @@
+#
+# Copyright (C) 2026 James Buren
+#
+# This is free software, licensed under the GNU General Public License v2.
+# See /COPYING for more information.
+#
+
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=datto-dna
