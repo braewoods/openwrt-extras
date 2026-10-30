@@ -19,7 +19,14 @@ include $(INCLUDE_DIR)/kernel.mk
 define KernelPackage/datto-dna
   SUBMENU:=Other modules
   TITLE:=Datto DNA Platform Driver
-  EXTRA_DEPENDS:=+kmod-gpio-nuvoton +kmod-leds-gpio +kmod-input-gpio-keys-polled +kmod-i2c-i801 +kmod-hwmon-jc42 +kmod-eeprom-at24 +kmod-hwmon-nct6775
+  EXTRA_DEPENDS:=                                                      \
+    kmod-gpio-nuvoton           (=$(LINUX_VERSION)-r$(LINUX_RELEASE)), \
+    kmod-leds-gpio              (=$(LINUX_VERSION)-r$(LINUX_RELEASE)), \
+    kmod-input-gpio-keys-polled (=$(LINUX_VERSION)-r$(LINUX_RELEASE)), \
+    kmod-i2c-i801               (=$(LINUX_VERSION)-r$(LINUX_RELEASE)), \
+    kmod-hwmon-jc42             (=$(LINUX_VERSION)-r$(LINUX_RELEASE)), \
+    kmod-eeprom-at24            (=$(LINUX_VERSION)-r$(LINUX_RELEASE)), \
+    kmod-hwmon-nct6775          (=$(LINUX_VERSION)-r$(LINUX_RELEASE))
   FILES:=$(PKG_BUILD_DIR)/datto-dna.ko
   AUTOLOAD:=$(call AutoLoad,60,datto-dna,1)
   KCONFIG:=
