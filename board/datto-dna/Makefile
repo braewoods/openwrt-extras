@@ -8,7 +8,6 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=datto-dna
-PKG_VERSION:=0.1
 PKG_RELEASE:=1
 
 PKG_MAINTAINER:=James Buren <braewoods+ow@braewoods.net>
@@ -20,7 +19,8 @@ define Package/board-datto-dna
   SECTION:=base
   CATEGORY:=Base system
   TITLE:=Board support files for Datto DNA
-  DEPENDS:=+kmod-datto-dna +kmod-i2c-i801 +kmod-hwmon-jc42 +kmod-eeprom-at24 +kmod-hwmon-nct6775
+  VERSION:=0.1
+  EXTRA_DEPENDS:=+kmod-datto-dna +kmod-i2c-i801 +kmod-hwmon-jc42 +kmod-eeprom-at24 +kmod-hwmon-nct6775
 endef
 
 define Package/board-datto-dna/description
