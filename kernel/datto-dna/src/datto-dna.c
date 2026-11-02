@@ -67,20 +67,20 @@ static const struct software_node datto_dna_keys_node = {
     .properties = datto_dna_keys_props,
 };
 
-// It is not const so the event key code can be set at runtime.
-static struct property_entry datto_dna_key_event_props[] = {
+// It is not const so the key code can be set at runtime.
+static struct property_entry datto_dna_key_props[] = {
     PROPERTY_ENTRY_U32("linux,code", KEY_RESERVED),
-    PROPERTY_ENTRY_STRING("label", "Datto DNA Key Event"),
+    PROPERTY_ENTRY_STRING("label", "Datto DNA Key"),
     PROPERTY_ENTRY_GPIO("gpios", &datto_dna_key_gpio_node, 49, GPIO_ACTIVE_LOW),
     PROPERTY_ENTRY_U32("linux,input-type", EV_KEY),
     PROPERTY_ENTRY_U32("debounce-interval", 10),
     {},
 };
 
-static const struct software_node datto_dna_key_event_node = {
-    .name = DRVNAME "-key-event",
+static const struct software_node datto_dna_key_node = {
+    .name = DRVNAME "-key",
     .parent = &datto_dna_keys_node,
-    .properties = datto_dna_key_event_props,
+    .properties = datto_dna_key_props,
 };
 
 static const struct software_node *datto_dna_swnodes[] = {
@@ -90,7 +90,7 @@ static const struct software_node *datto_dna_swnodes[] = {
     &datto_dna_led_wwan_node,
     &datto_dna_key_gpio_node,
     &datto_dna_keys_node,
-    &datto_dna_key_event_node,
+    &datto_dna_key_node,
     NULL,
 };
 
@@ -109,7 +109,7 @@ datto_dna_code_verify(void)
         return -EINVAL;
     }
 
-    datto_dna_key_event_props[0].value.u32_data[0] = datto_dna_code;
+    datto_dna_key_props[0].value.u32_data[0] = datto_dna_code;
     return 0;
 }
 
