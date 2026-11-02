@@ -26,7 +26,8 @@ define KernelPackage/datto-dna
     kmod-i2c-i801               (=$(LINUX_VERSION)-r$(LINUX_RELEASE)), \
     kmod-hwmon-jc42             (=$(LINUX_VERSION)-r$(LINUX_RELEASE)), \
     kmod-eeprom-at24            (=$(LINUX_VERSION)-r$(LINUX_RELEASE)), \
-    kmod-hwmon-nct6775          (=$(LINUX_VERSION)-r$(LINUX_RELEASE))
+    kmod-hwmon-nct6775          (=$(LINUX_VERSION)-r$(LINUX_RELEASE)), \
+    kmod-hwmon-cfatemp          (=$(LINUX_VERSION)-r$(LINUX_RELEASE))
   FILES:=$(PKG_BUILD_DIR)/datto-dna.ko
   AUTOLOAD:=$(call AutoLoad,60,datto-dna,1)
   KCONFIG:=
