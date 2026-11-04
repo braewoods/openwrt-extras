@@ -29,7 +29,8 @@ define KernelPackage/datto-dna
     kmod-hwmon-nct6775          (=$(LINUX_VERSION)-r$(LINUX_RELEASE)), \
     kmod-hwmon-cfatemp          (=$(LINUX_VERSION)-r$(LINUX_RELEASE)), \
     kmod-igb                    (=$(LINUX_VERSION)-r$(LINUX_RELEASE)), \
-    kmod-usb2                   (=$(LINUX_VERSION)-r$(LINUX_RELEASE))
+    kmod-usb2                   (=$(LINUX_VERSION)-r$(LINUX_RELEASE)), \
+    kmod-pcspkr                 (=$(LINUX_VERSION)-r$(LINUX_RELEASE))
   FILES:=$(PKG_BUILD_DIR)/datto-dna.ko
   AUTOLOAD:=$(call AutoLoad,60,datto-dna,1)
   KCONFIG:=
