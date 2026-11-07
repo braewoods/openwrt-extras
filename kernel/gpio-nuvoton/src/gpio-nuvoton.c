@@ -24,7 +24,8 @@
 #define SIO_LDSEL        0x07
 #define SIO_CHIPID       0x20
 
-#define SIO_NCT6106D_ID  0xc452
+#define SIO_NCT6106D_ID0 0xc452
+#define SIO_NCT6106D_ID1 0xc453
 #define SIO_NOCHIP       0xffff
 
 #define NUVOTON_REG_DIR  0
@@ -430,7 +431,8 @@ nuvoton_probe_chip(u16 addr, struct nuvoton_sio *sio)
 
     chip = sio_inw(addr, SIO_CHIPID);
     switch (chip) {
-        case SIO_NCT6106D_ID:
+        case SIO_NCT6106D_ID0:
+        case SIO_NCT6106D_ID1:
             sio->chip = nct6106d;
             break;
 
