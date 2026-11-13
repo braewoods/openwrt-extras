@@ -1,0 +1,13 @@
+#
+# Copyright (c) 2026 James Buren
+#
+
+do_sysinfo_datto_dna() {
+    local DATTO_DNA_ID DATTO_DNA_NAME DATTO_DNA_LAN DATTO_DNA_WAN
+    . /lib/config/datto-dna.sh
+    mkdir -p /tmp/sysinfo
+    echo "${DATTO_DNA_ID}" > /tmp/sysinfo/board_name
+    echo "${DATTO_DNA_NAME}" > /tmp/sysinfo/model
+}
+
+boot_hook_add preinit_main do_sysinfo_datto_dna

@@ -2,9 +2,9 @@
 # Copyright (c) 2026 James Buren
 #
 
-. /lib/config/datto-dna.sh
 . /lib/functions/system.sh
 . /lib/functions/uci-defaults.sh
+. /lib/config/datto-dna.sh
 
 board_config_update
 
