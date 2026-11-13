@@ -8,8 +8,8 @@
 
 board_config_update
 
-ucidef_set_board_id "datto-dna"
-ucidef_set_model_name "Datto DNA"
+ucidef_set_board_id "${DATTO_DNA_ID}"
+ucidef_set_model_name "${DATTO_DNA_NAME}"
 
 ucidef_set_network_device_path "eth1" "pci0000:00/0000:00:03.0/0000:03:00.0"
 ucidef_set_network_device_path "eth2" "pci0000:00/0000:00:04.0/0000:04:00.0"
