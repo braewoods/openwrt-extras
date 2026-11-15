@@ -7,7 +7,7 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=iperfs
+PKG_NAME:=iperf-extras
 PKG_VERSION:=0.1
 PKG_RELEASE:=1
 
@@ -19,41 +19,39 @@ include $(INCLUDE_DIR)/package.mk
 define Build/Compile/Default
 endef
 
-define Package/iperfs
+define Package/iperf-extras
   SECTION:=net
   CATEGORY:=Network
-  TITLE:=Init script for iperf server
+  TITLE:=Extra files for iperf
   EXTRA_DEPENDS:=   \
     iperf (>=2.2.1)
 endef
 
-define Package/iperfs/description
-  This package contains an init script to allow running an
-  iperf server as a system service.
+define Package/iperf-extras/description
+  This package contains extra files for iperf, such as an init file.
 endef
 
-define Package/iperfs/install
+define Package/iperf-extras/install
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/iperf.init $(1)/etc/init.d/iperf
 endef
 
-define Package/iperf3s
+define Package/iperf3-extras
   SECTION:=net
   CATEGORY:=Network
-  TITLE:=Init script for iperf3 server
+  TITLE:=Extra files for iperf3
   EXTRA_DEPENDS:=   \
     iperf3 (>=3.22)
 endef
 
-define Package/iperf3s/description
-  This package contains an init script to allow running an
-  iperf3 server as a system service.
+define Package/iperf3-extras/description
+  This package contains extra files for iperf3, such as an init file.
 endef
 
-define Package/iperf3s/install
+define Package/iperf3-extras/install
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/iperf3.init $(1)/etc/init.d/iperf3
 endef
 
-$(eval $(call BuildPackage,iperfs))
-$(eval $(call BuildPackage,iperf3s))
+$(eval $(call BuildPackage,iperf-extras))
+$(eval $(call BuildPackage,iperf3-extras))
