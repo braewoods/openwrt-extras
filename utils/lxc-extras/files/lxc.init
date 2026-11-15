@@ -1,0 +1,12 @@
+#!/bin/sh /etc/rc.common
+
+START=99
+STOP=00
+
+start() {
+	/usr/bin/lxc-autostart -a
+}
+
+stop() {
+	/usr/bin/lxc-autostart -a -s -t 15
+}
