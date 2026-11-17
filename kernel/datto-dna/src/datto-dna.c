@@ -18,7 +18,8 @@
 
 #define DRVNAME "datto-dna"
 
-static unsigned int datto_dna_code = KEY_RESTART;
+static unsigned int datto_dna_key1 = KEY_RESTART;
+static unsigned int datto_dna_key2 = KEY_POWER;
 
 static const struct software_node datto_dna_led_gpio_node = {
     .name = "gpio-nuvoton-1",
@@ -68,19 +69,34 @@ static const struct software_node datto_dna_keys_node = {
 };
 
 // It is not const so the key code can be set at runtime.
-static struct property_entry datto_dna_key_props[] = {
+static struct property_entry datto_dna_key1_props[] = {
     PROPERTY_ENTRY_U32("linux,code", KEY_RESERVED),
-    PROPERTY_ENTRY_STRING("label", "Datto DNA Key"),
+    PROPERTY_ENTRY_STRING("label", DRVNAME "-key-1"),
     PROPERTY_ENTRY_GPIO("gpios", &datto_dna_key_gpio_node, 49, GPIO_ACTIVE_LOW),
     PROPERTY_ENTRY_U32("linux,input-type", EV_KEY),
     PROPERTY_ENTRY_U32("debounce-interval", 10),
     {},
 };
 
-static const struct software_node datto_dna_key_node = {
-    .name = DRVNAME "-key",
+static const struct software_node datto_dna_key1_node = {
+    .name = DRVNAME "-key-1",
     .parent = &datto_dna_keys_node,
-    .properties = datto_dna_key_props,
+    .properties = datto_dna_key1_props,
+};
+
+static struct property_entry datto_dna_key2_props[] = {
+    PROPERTY_ENTRY_U32("linux,code", KEY_RESERVED),
+    PROPERTY_ENTRY_STRING("label", DRVNAME "-key-2"),
+    PROPERTY_ENTRY_GPIO("gpios", &datto_dna_key_gpio_node, 50, GPIO_ACTIVE_LOW),
+    PROPERTY_ENTRY_U32("linux,input-type", EV_KEY),
+    PROPERTY_ENTRY_U32("debounce-interval", 10),
+    {},
+};
+
+static const struct software_node datto_dna_key2_node = {
+    .name = DRVNAME "-key-2",
+    .parent = &datto_dna_keys_node,
+    .properties = datto_dna_key2_props,
 };
 
 static const struct software_node *datto_dna_swnodes[] = {
@@ -90,7 +106,8 @@ static const struct software_node *datto_dna_swnodes[] = {
     &datto_dna_led_wwan_node,
     &datto_dna_key_gpio_node,
     &datto_dna_keys_node,
-    &datto_dna_key_node,
+    &datto_dna_key1_node,
+    &datto_dna_key2_node,
     NULL,
 };
 
@@ -98,9 +115,9 @@ static struct platform_device *datto_dna_led_pdev;
 static struct platform_device *datto_dna_key_pdev;
 
 static int __init
-datto_dna_code_verify(void)
+datto_dna_key_verify(unsigned int *key, struct property_entry *pe)
 {
-    if (datto_dna_code == KEY_RESERVED || datto_dna_code > KEY_MAX) {
+    if (*key == KEY_RESERVED || *key > KEY_MAX) {
         pr_err(
             DRVNAME ": key code must not be %u or greater than %u\n",
             KEY_RESERVED,
@@ -109,7 +126,7 @@ datto_dna_code_verify(void)
         return -EINVAL;
     }
 
-    datto_dna_key_props[0].value.u32_data[0] = datto_dna_code;
+    pe[0].value.u32_data[0] = *key;
     return 0;
 }
 
@@ -126,7 +143,11 @@ datto_dna_init(void)
     };
     int ret = 0;
 
-    ret = datto_dna_code_verify();
+    ret = datto_dna_key_verify(&datto_dna_key1, datto_dna_key1_props);
+    if (ret)
+        goto bail;
+
+    ret = datto_dna_key_verify(&datto_dna_key2, datto_dna_key2_props);
     if (ret)
         goto bail;
 
@@ -170,8 +191,11 @@ datto_dna_exit(void)
     software_node_unregister_node_group(datto_dna_swnodes);
 }
 
-module_param_named(code, datto_dna_code, uint, 0444);
-MODULE_PARM_DESC(code, "key code to emit when button is pressed");
+module_param_named(key1, datto_dna_key1, uint, 0444);
+MODULE_PARM_DESC(key1, "key code to emit when button 1 is pressed");
+
+module_param_named(key2, datto_dna_key2, uint, 0444);
+MODULE_PARM_DESC(key2, "key code to emit when button 2 is pressed");
 
 module_init(datto_dna_init);
 module_exit(datto_dna_exit);
